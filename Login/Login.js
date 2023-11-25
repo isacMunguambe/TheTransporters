@@ -9,11 +9,29 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import { FIREBASE_AUTH } from "../FirebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login({ navigation }) {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = FIREBASE_AUTH;
+
+  const signIn = async () => {
+    try {
+      const response = await signInWithEmailAndPassword(auth,email, password);
+      console.log(response)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../assets/miniLogo.png")} /> 
+      <Image style={styles.image} source={require("../assets/miniLogo.png")} />
       <Text style={styles.txtTittle}>Entrar no FH</Text>
       <Text style={styles.txtSubTittle}>Bem-vindo de volta!</Text>
       <StatusBar style="auto" />
@@ -24,8 +42,8 @@ export default function Login({ navigation }) {
           placeholder="Email."
           placeholderTextColor="#003f5c"
           onChangeText={(email) => setEmail(email)}
-        /> 
-      </View> 
+        />
+      </View>
       <Text style={styles.textAboveInputs}>Palavra-passe:</Text>
       <View style={styles.inputView}>
         <TextInput
@@ -34,62 +52,62 @@ export default function Login({ navigation }) {
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
-        /> 
-      </View> 
+        />
+      </View>
       <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText}>Entrar</Text> 
-      </TouchableOpacity> 
+        <Text style={styles.loginText} onPress={() => signIn()}>Entrar</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.forgot_button} onPress={() => navigation.navigate('Registo')}>
-        <Text >Ainda não está registado? 
+        <Text >Ainda não está registado?
           <Text style={styles.txtJaRegistado}>Criar conta.</Text>
-          </Text> 
-      </TouchableOpacity> 
-      <Text>Ou</Text> 
+        </Text>
+      </TouchableOpacity>
+      <Text>Ou</Text>
       <TouchableOpacity style={styles.googleLogin}>
-        <Text style={styles.loginGoogleText}>Entrar com Google</Text> 
-      </TouchableOpacity> 
-    </View> 
+        <Text style={styles.loginGoogleText}>Entrar com Google</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width:'100%',
+    width: '100%',
     backgroundColor: "#fff",
     alignItems: "center",
-    marginTop:'25%'
+    paddingTop: '25%'
   },
   image: {
     marginBottom: 30,
   },
   inputView: {
     backgroundColor: "#fff",
-    borderColor:'#9FC5B3',
+    borderColor: '#9FC5B3',
     borderWidth: 1,
     width: "85%",
     height: 45,
     marginBottom: 20,
     alignItems: "left",
-    fontSize:14,
+    fontSize: 14,
   },
   textAboveInputs: {
     color: '#666666',
     width: "85%",
     marginBottom: 10,
-    marginLeft:35,
+    marginLeft: 35,
   },
   txtTittle: {
     color: '#666666',
     width: "85%",
     marginBottom: 18,
-    fontSize:24,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   txtSubTittle: {
     color: '#666666',
     width: "85%",
     marginBottom: 25,
-    fontSize:16,
+    fontSize: 16,
   },
   TextInput: {
     height: 50,
@@ -111,9 +129,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#106E42",
     marginBottom: 10,
   },
-  loginText:{
-    fontSize:16,
-    color:"#fff",
+  loginText: {
+    fontSize: 16,
+    color: "#fff",
   },
   googleLogin: {
     width: "85%",
@@ -123,12 +141,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "#fff",
     marginBottom: 10,
-    borderColor:'#666666',
+    borderColor: '#666666',
     borderWidth: 1,
   },
-  loginGoogleText:{
-    fontSize:16,
-    color:"#666666",
+  loginGoogleText: {
+    fontSize: 16,
+    color: "#666666",
   },
   txtJaRegistado: {
     color: '#106E42',

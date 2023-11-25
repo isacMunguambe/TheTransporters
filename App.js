@@ -11,16 +11,9 @@ import Registo2 from './Login/Registo2';
 import Socorro from './passageiro/socorro';
 import bottomNav from './bottomNav';
 import Viagem from './passageiro/viagem';
+import Inicio from './passageiro/Inicio';
 
 const Stack = createNativeStackNavigator();
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
 
 function SettingsScreen() {
   return (
@@ -34,9 +27,9 @@ const Tab = createBottomTabNavigator();
 
 const AutenticacaoNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator >
+        <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
         <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Registo" component={Registo} />
         <Stack.Screen name="Registo2" component={Registo2} />
     </Stack.Navigator>
@@ -46,8 +39,7 @@ const AutenticacaoNavigator = () => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-      <Stack.Screen options={{ headerShown: false }} name="SettingsScreen" component={SettingsScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="Início" component={Inicio} />
     </Stack.Navigator>
   );
 };
@@ -86,7 +78,7 @@ const screenOptions = (route, color) => {
 export default function App() {
   return (
     <NavigationContainer>
-    {true ? (
+    {false ? (
       <BottomTabNavigator />
     ) : (
       <AutenticacaoNavigator />

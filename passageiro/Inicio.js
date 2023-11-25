@@ -18,48 +18,41 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as Location from "expo-location";
 
 
-export default function Viagem() {
+export default function Inicio() {
 
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
-              // Request permission to access the device's location
-              (async () => {
-                let { status } = await Location.requestForegroundPermissionsAsync();
-                if (status !== 'granted') {
-                  setErrorMsg('Permission to access location was denied');
-                  return;
-                }
-          
-                Location.watchPositionAsync(
-                  {
+        // Request permission to access the device's location
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+
+            Location.watchPositionAsync(
+                {
                     accuracy: Location.Accuracy.High,
                     timeInterval: 5000, // Update every 5 seconds
                     distanceInterval: 10 // Update if the user moves by 10 meters
-                  },
-                  (newLocation) => {
+                },
+                (newLocation) => {
                     setLocation(newLocation.coords);
-                  }
-                );
-              })();
+                }
+            );
+        })();
     }, []);
 
     return (
         <View style={styles.container}>
             <View style={styles.inputViewContacto}>
                 <View style={styles.viewIconContacto}>
-                    <TouchableOpacity style={styles.cancelarViagem}>
-                        <Text style={styles.cancelarText}>X</Text>
-                    </TouchableOpacity>
+                    <Image style={styles.image} source={require("../assets/miniLogo.png")} />
                 </View>
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Destino: Maxixe"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(email) => setEmail(email)}
-                    />
+                <View style={styles.topSettings}>
+                    <Icon name="settings-outline" style={styles.txtCodigo} size={30} color="#6E6E6E" />
                 </View>
             </View>
 
@@ -86,18 +79,9 @@ export default function Viagem() {
 
             <View >
                 <TouchableOpacity style={styles.mandarAlerta}>
-                    <Text style={styles.AlertaText}>Mandar Alerta</Text>
+                    <Text style={styles.AlertaText}>Iniciar Viagem</Text>
                 </TouchableOpacity>
-                <View style={styles.tempoEstimado}>
-                    <Text style={styles.loginGoogleText}>
-                        Tempo estimado para chegada:
-                    </Text>
-                    <Text style={styles.loginGoogleText}>
-                        5:45am
-                    </Text>
-                </View>
             </View>
-
         </View>
     );
 }
@@ -111,16 +95,16 @@ const styles = StyleSheet.create({
         paddingTop: '8%',
         justifyContent: 'space-between',
     },
+    image: {
+        marginLeft: '10%',
+    },
     map2: {
         width: '100%',
-        height: '75%',
+        height: '70%',
     },
     map: {
         width: '100%',
         height: '100%',
-    },
-    image: {
-        marginBottom: 30,
     },
     inputView: {
         backgroundColor: "#fff",
@@ -133,6 +117,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginLeft: '5%',
         marginRight: '2%',
+    },
+    topSettings: {
+        backgroundColor: "#fff",
+        borderColor: '#9FC5B3',
+        borderWidth: 1,
+        width: "10%",
+        height: 45,
+        marginTop:'2%'
     },
     textAboveInputs: {
         color: '#666666',
@@ -184,7 +176,7 @@ const styles = StyleSheet.create({
     loginGoogleText: {
         fontSize: 16,
         color: "#6E6E6E",
-        marginLeft:'3%'
+        marginLeft: '3%'
     },
     cancelarText: {
         fontSize: 20,
@@ -209,7 +201,7 @@ const styles = StyleSheet.create({
         height: 45,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#4E9373",
+        backgroundColor: "#106E42",
         marginBottom: '3%',
         borderRadius: 8,
         marginLeft: '2%'
@@ -224,7 +216,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginLeft: '20%',
         marginRight: '20%',
-        borderWidth:1,
+        borderWidth: 1,
         borderColor: '#4E9373',
     },
     viewIconContacto: {
@@ -232,15 +224,14 @@ const styles = StyleSheet.create({
         borderColor: '#9FC5B3',
         width: "15%",
         height: 45,
-        marginBottom: 8,
         alignItems: "left",
         fontSize: 14,
+        marginTop:'2%',
+        marginLeft:'5%'
     },
     txtCodigo: {
-        paddingLeft: '15%',
         width: "100%",
         height: 45,
-        textAlignVertical: 'center',
     },
     viewIconName: {
         backgroundColor: "#fff",
@@ -290,6 +281,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: 'white',
         width: '95%',
-        marginBottom:'4%'
+        marginBottom: '4%'
     },
 });
